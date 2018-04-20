@@ -38,9 +38,9 @@ fclose($fp);
 	}else if($necklace['yellow'] > 0){
 		$count = 1;
 		$necklace['yellow'] -= 1;
-		last($count);
+		result($count);
 	}else{
-		last(0);
+		result(0);
 	}
 
 	function red($necklace, $count, $recent){
@@ -50,7 +50,7 @@ fclose($fp);
 			green($necklace, $count);
 		}else{
 			if($recent == 'blue' || $recent == 'yellow'){
-				last($count);
+				result($count);
 			}else{
 				green($necklace, $count);
 			}
@@ -74,16 +74,17 @@ fclose($fp);
 			if($necklace['red'] > 0){
 				red($necklace, $count, 'yellow');
 			}else{
-				last($count);
+				result($count);
 			}
 		}else{
-			last($count);
+			result($count);
 		}
 	}
 	
-	function last($count)
+	function result($count)
 	{
-		echo (int)$count;
+		$output = (int)$count;
+		fwrite(STDOUT, $output);
 		exit;
 	}
 ?>

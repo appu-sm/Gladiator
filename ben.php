@@ -22,7 +22,7 @@
 		}
 	}
 	fclose($fp);
-	print_r($values);
+//	print_r($values);
 	print_r($weaponRequired);
 
 /*	
@@ -31,5 +31,10 @@
 	}
 */	
 	sort($weaponRequired);
-	print_r($weaponRequired);
+	foreach($weaponRequired as $key => $number){
+		$digitWiseNumber = str_split(trim($number));
+		print_r($digitWiseNumber);
+		//$required[$key] = array_sum(str_split($number));
+	}
+	//print_r($weaponRequired);
 ?>
