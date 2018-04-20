@@ -22,19 +22,38 @@
 		}
 	}
 	fclose($fp);
-//	print_r($values);
-	print_r($weaponRequired);
-
-/*	
-	foreach($weaponRequired as $key => $number){
-		$required[$key] = array_sum(str_split($number));
-	}
-*/	
 	sort($weaponRequired);
+	
+
+	
+print_r($arr);	
+	foreach($weaponRequired as $key => $data){
+		$lastpos = 0;
+		$positions = [];
+		while(($lastpos = strpos($data, '1', $lastpos)) !== false){
+			$positions [] = $lastpos;
+			$lastpos = $lastpos + strlen(1);
+		}
+		
+		//$level[$key];
+		print_r($positions);
+		echo "\n";
+	}
+
+
+
+/*
+	sort($weaponRequired);
+	print_r($weaponRequired);
 	foreach($weaponRequired as $key => $number){
+		$onesCount = preg_match_all( "/[1]/", $number );
+		
+		echo $number."\n";
+		echo $onesCount;
 		$digitWiseNumber = str_split(trim($number));
-		print_r($digitWiseNumber);
+//		print_r($digitWiseNumber);
 		//$required[$key] = array_sum(str_split($number));
 	}
 	//print_r($weaponRequired);
+	*/
 ?>
