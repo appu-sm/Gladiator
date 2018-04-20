@@ -23,24 +23,45 @@
 	}
 	fclose($fp);
 	sort($weaponRequired);
-	
+	$arr = [];
+/*
+	foreach($weaponRequired as $number){
+		$onesCount = preg_match_all( "/[1]/", $number );
+		$newArr['count'] = $onesCount;
+		$newArr['number'] = $number;
+		array_push($arr, $newArr);
+	}
+	usort($arr, function ($a, $b){
+		return $a['count'] - $b['count'];
+	});
+*/	
 
 	
 print_r($arr);	
+$seconArr = [];
 	foreach($weaponRequired as $key => $data){
 		$lastpos = 0;
 		$positions = [];
+		$level = [];
 		while(($lastpos = strpos($data, '1', $lastpos)) !== false){
 			$positions [] = $lastpos;
 			$lastpos = $lastpos + strlen(1);
 		}
 		
 		//$level[$key];
-		print_r($positions);
-		echo "\n";
+		$level['ones'] = count($positions);
+		$level['position'] = $positions;
+		$level['number'] = $data;
+		array_push($seconArr, $level);
 	}
 
-
+	usort($seconArr, function ($a, $b){
+		return $a['ones'] - $b['ones'];
+	});
+print_r($seconArr);
+	foreach($seconArr as $arra){
+		$coin = $arra['ones'] * $arra['ones'];
+	}
 
 /*
 	sort($weaponRequired);
