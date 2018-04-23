@@ -37,7 +37,7 @@
 */	
 
 	
-print_r($arr);	
+//print_r($arr);	
 $seconArr = [];
 	foreach($weaponRequired as $key => $data){
 		$lastpos = 0;
@@ -50,7 +50,7 @@ $seconArr = [];
 		
 		//$level[$key];
 		$level['ones'] = count($positions);
-		$level['position'] = $positions;
+		$level['position'] = implode(',',$positions);
 		$level['number'] = $data;
 		array_push($seconArr, $level);
 	}
@@ -59,22 +59,19 @@ $seconArr = [];
 		return $a['ones'] - $b['ones'];
 	});
 print_r($seconArr);
-	foreach($seconArr as $arra){
+$coins = [];
+	foreach($seconArr as $key => $arra){
 		$coin = $arra['ones'] * $arra['ones'];
+		array_push($coins, $coin);
+		if($key == 0){
+			$minNumber = $arra['number'];
+		}
+		cost($minNumber, $arra['number']);
 	}
 
-/*
-	sort($weaponRequired);
-	print_r($weaponRequired);
-	foreach($weaponRequired as $key => $number){
-		$onesCount = preg_match_all( "/[1]/", $number );
-		
-		echo $number."\n";
-		echo $onesCount;
-		$digitWiseNumber = str_split(trim($number));
-//		print_r($digitWiseNumber);
-		//$required[$key] = array_sum(str_split($number));
+	function cost($a, $b)
+	{
+		$c =  ($a ^ $b) ;//& $b;
+		print_r($c);
 	}
-	//print_r($weaponRequired);
-	*/
 ?>
