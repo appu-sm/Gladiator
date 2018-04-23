@@ -10,7 +10,7 @@ while($line = fgets($fp)){
 			$necklace['red'] = $line;
 			break;
 		case 2:
-			$necklace['yellow'] = $line;
+			$necklace['yellow'] = $line; 
 			break;
 		case 3:
 			$necklace['green'] = $line;
@@ -23,19 +23,19 @@ while($line = fgets($fp)){
 }
 fclose($fp);
 
-	if($necklace['blue'] > 0){
+	if(isset($necklace['blue']) && $necklace['blue'] > 0){
 		$count = $necklace['blue'];
 		$necklace['blue'] = 0;
 		red($necklace, $count, 'blue');
-	}else if($necklace['red'] > 0){
+	}else if(isset($necklace['red']) && $necklace['red'] > 0){
 		$count = 1;
 		$necklace['red'] -= 1;
 		green($necklace, $count);
-	}else if($necklace['green'] > 0){
+	}else if(isset($necklace['green']) && $necklace['green'] > 0){
 		$count = $necklace['green'];
 		$necklace['green'] = 0;
 		yellow($necklace, $count);
-	}else if($necklace['yellow'] > 0){
+	}else if(isset($necklace['yellow']) && $necklace['yellow'] > 0){
 		$count = 1;
 		$necklace['yellow'] -= 1;
 		result($count);
@@ -44,7 +44,7 @@ fclose($fp);
 	}
 
 	function red($necklace, $count, $recent){
-		if($necklace['red'] > 0){
+		if(isset($necklace['red']) && $necklace['red'] > 0){
 			$count += 1;
 			$necklace['red'] -= 1;
 			green($necklace, $count);
@@ -58,7 +58,7 @@ fclose($fp);
 	}
 	
 	function green($necklace, $count){
-		if($necklace['green'] > 0){
+		if(isset($necklace['green']) && $necklace['green'] > 0){
 			$count += $necklace['green'];
 			$necklace['green'] = 0;
 			yellow($necklace, $count);
@@ -68,7 +68,7 @@ fclose($fp);
 	}
 	
 	function yellow($necklace, $count){
-		if($necklace['yellow'] > 0){
+		if(isset($necklace['yellow']) && $necklace['yellow'] > 0){
 			$count += 1;
 			$necklace['yellow'] -= 1;
 			if($necklace['red'] > 0){
