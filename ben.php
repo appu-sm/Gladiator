@@ -37,52 +37,61 @@
 */	
 
 	
-//print_r($arr);	
-$seconArr = [];
-	foreach($weaponRequired as $key => $data){
-		$lastpos = 0;
-		$positions = [];
-		$level = [];
-		while(($lastpos = strpos($data, '1', $lastpos)) !== false){
-			$positions [] = $lastpos;
-			$lastpos = $lastpos + strlen(1);
-		}
-		
-		//$level[$key];
-		$level['ones'] = count($positions);
-		$level['position'] = implode(',',$positions);
-		$level['number'] = $data;
-		array_push($seconArr, $level);
-	}
-
-	usort($seconArr, function ($a, $b){
-		return $a['ones'] - $b['ones'];
-	});
-print_r($seconArr);
-
+//print_r($arr);
 	$totalCoins = [];
+	$sortedArray = sortArray($weaponRequired);
+	function sortArray($givenArray){
+		$seconArr = [];
+		foreach($givenArray as $key => $data){
+			$lastpos = 0;
+			$positions = [];
+			$level = [];
+			while(($lastpos = strpos($data, '1', $lastpos)) !== false){
+				$positions [] = $lastpos;
+				$lastpos = $lastpos + strlen(1);
+			}
+			
+			//$level[$key];
+			$level['ones'] = count($positions);
+			$level['position'] = implode(',',$positions);
+			$level['number'] = $data;
+			array_push($seconArr, $level);
+		}
 
-	$allCoins = calculateCoin($seconArr, $totalCoins);
+		usort($seconArr, function ($a, $b){
+			return $a['ones'] - $b['ones'];
+		});
+		return $seconArr;
+	}
+print_r($sortedArray);
+
+
+	$allCoins = calculateCoin($sortedArray, $totalCoins);
 print_r($allCoins); die;	
 	$output = array_sum($allCoins);
 	
 	function calculateCoin($array, $totalCoins){
-		if(isset($array[0])){
+		if(isset($array[1])){
 			$level = $array[0];
 			$coins = $level['ones'] * $level['ones'];
 			$firstLevelPositions = explode(',', $level['position']);
 			array_push($totalCoins, $coins);
 			array_shift($array);
 //print_r($array); die;
+			$newArray = [];
 			foreach($array as $newLevel){
 				$positions = explode(',', $newLevel['position']);
 				foreach($firstLevelPositions as $firstLevelPosition){
 					if(in_array($firstLevelPosition, $positions)){
 						$newLevel['number'] = substr_replace($newLevel['number'], 0, $firstLevelPosition, 1);
 					}
+					array_push($newArray, $newLevel);
 				}
 			}
-			return calculateCoin($array, $totalCoins);
+print_r($newArray);			
+			$secArray = sortArray($newArray);
+print_r($secArray); die;			
+			return calculateCoin($secArray, $totalCoins);
 		}else{
 			return $totalCoins;
 		}
