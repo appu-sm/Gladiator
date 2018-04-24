@@ -82,7 +82,7 @@ print_r($allCoins); die;
 					}
 				}
 			}
-			return calculateCoin($newArray);
+			return calculateCoin($array, $totalCoins);
 		}else{
 			return $totalCoins;
 		}
