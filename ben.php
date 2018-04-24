@@ -24,22 +24,13 @@
 	fclose($fp);
 	sort($weaponRequired);
 	$arr = [];
-/*
-	foreach($weaponRequired as $number){
-		$onesCount = preg_match_all( "/[1]/", $number );
-		$newArr['count'] = $onesCount;
-		$newArr['number'] = $number;
-		array_push($arr, $newArr);
-	}
-	usort($arr, function ($a, $b){
-		return $a['count'] - $b['count'];
-	});
-*/	
 
-	
-//print_r($arr);
 	$totalCoins = [];
 	$sortedArray = sortArray($weaponRequired);
+	$allCoins = calculateCoin($sortedArray, $totalCoins);
+	$output = array_sum($allCoins);
+print_r($output); die;
+
 	function sortArray($givenArray){
 		$seconArr = [];
 		foreach($givenArray as $key => $data){
@@ -50,8 +41,7 @@
 				$positions [] = $lastpos;
 				$lastpos = $lastpos + strlen(1);
 			}
-			
-			//$level[$key];
+
 			$level['ones'] = count($positions);
 			$level['position'] = implode(',',$positions);
 			$level['number'] = $data;
@@ -63,21 +53,14 @@
 		});
 		return $seconArr;
 	}
-print_r($sortedArray);
-
-
-	$allCoins = calculateCoin($sortedArray, $totalCoins);
-print_r($allCoins); die;	
-	$output = array_sum($allCoins);
 	
 	function calculateCoin($array, $totalCoins){
-		if(isset($array[1])){
+		if(isset($array[0])){
 			$level = $array[0];
 			$coins = $level['ones'] * $level['ones'];
 			$firstLevelPositions = explode(',', $level['position']);
 			array_push($totalCoins, $coins);
 			array_shift($array);
-//print_r($array); die;
 			$newArray = [];
 			foreach($array as $newLevel){
 				$positions = explode(',', $newLevel['position']);
@@ -85,12 +68,10 @@ print_r($allCoins); die;
 					if(in_array($firstLevelPosition, $positions)){
 						$newLevel['number'] = substr_replace($newLevel['number'], 0, $firstLevelPosition, 1);
 					}
-					array_push($newArray, $newLevel);
+					array_push($newArray, $newLevel['number']);
 				}
 			}
-print_r($newArray);			
 			$secArray = sortArray($newArray);
-print_r($secArray); die;			
 			return calculateCoin($secArray, $totalCoins);
 		}else{
 			return $totalCoins;
