@@ -59,19 +59,31 @@ $seconArr = [];
 		return $a['ones'] - $b['ones'];
 	});
 print_r($seconArr);
-$coins = [];
-	foreach($seconArr as $key => $arra){
-		$coin = $arra['ones'] * $arra['ones'];
-		array_push($coins, $coin);
-		if($key == 0){
-			$minNumber = $arra['number'];
-		}
-		cost($minNumber, $arra['number']);
-	}
 
-	function cost($a, $b)
-	{
-		$c =  ($a ^ $b) ;//& $b;
-		print_r($c);
+	$totalCoins = [];
+
+	$allCoins = calculateCoin($seconArr, $totalCoins);
+print_r($allCoins); die;	
+	$output = array_sum($allCoins);
+	
+	function calculateCoin($array, $totalCoins){
+		if(isset($array[0])){
+			$level = $array[0];
+			$coins = $level['ones'] * $level['ones'];
+			$firstLevelPositions = explode(',', $level['position']);
+			array_push($totalCoins, $coins);
+			array_shift($array);
+//print_r($array); die;
+			foreach($array as $newLevel){
+				$positions = explode(',', $newLevel['position']);
+				foreach($firstLevelPositions as $firstLevelPosition){
+					if(in_array($firstLevelPosition, $positions)){
+						$newLevel['number'] = substr_replace($newLevel['number'], 0, $firstLevelPosition, 1);
+					}
+				}
+			}
+			return calculateCoin($newArray);
+		}else{
+			return $totalCoins;
+		}
 	}
-?>
