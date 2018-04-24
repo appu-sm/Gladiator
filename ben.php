@@ -29,7 +29,9 @@
 	$sortedArray = sortArray($weaponRequired);
 	$allCoins = calculateCoin($sortedArray, $totalCoins);
 	$output = array_sum($allCoins);
-print_r($output); die;
+
+	$output = (int)$output;
+	fwrite(STDOUT, $output);
 
 	function sortArray($givenArray){
 		$seconArr = [];
