@@ -10,10 +10,15 @@
 			$level = $values[0];
 			$weapon = $values[1];
 		}else{
-			if(count($weaponRequired) < $level){
-				$weaponRequired[$i] = $line;
-				$i++;
-				if(count($weaponRequired) == $level){
+			$line1 = trim($line);
+			if($weapon == strlen($line1)){
+				if(count($weaponRequired) < $level){
+					$weaponRequired[$i] = $line;
+					$i++;
+					if(count($weaponRequired) == $level){
+						break;
+					}
+				}else{
 					break;
 				}
 			}else{
